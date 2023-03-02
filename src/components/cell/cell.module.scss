@@ -1,10 +1,23 @@
+@import "../../styles/index.scss";
+
 .wrapper{
   width: 25px;
   height: 25px;
   border-width: 4px;
   border-style: solid;
-  border-left-color: white;
-  border-top-color: white;
-  border-right-color: gray;
-  border-bottom-color: gray;
+  @include no-active;
+  &:active{
+    border-width: 2px;
+    border-style: solid;
+    @include active;
+  }
+
+  &.open{
+    border: 1px solid gray;
+  }
+}
+
+.img{
+  width: 23.9px;
+  height: 23.9px;
 }

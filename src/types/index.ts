@@ -8,14 +8,14 @@ export enum CellValue {
   SIX,
   SEVEN,
   EIGHT,
-  NINE,
   BOMB
 }
 
 export enum CellState {
+  CLOSE,
   OPEN,
-  VISIBLE,
-  FLAG
+  FLAG,
+  QUESTION
 }
 
 export type Cell = {value: CellValue, state: CellState}

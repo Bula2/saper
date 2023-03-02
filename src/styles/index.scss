@@ -1,0 +1,13 @@
+@mixin active {
+  border-left-color: gray;
+  border-top-color: gray;
+  border-right-color: white;
+  border-bottom-color: white;
+}
+
+@mixin no-active {
+  border-left-color: white;
+  border-top-color: white;
+  border-right-color: gray;
+  border-bottom-color: gray;
+}

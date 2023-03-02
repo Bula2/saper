@@ -7,11 +7,18 @@ import Cell from "../cell";
 
 const Field: React.FC = () => {
   const [cells, setCells] = useState(getCells());
+
   const generateCells = (): ReactNode => {
     return cells.map((row, rowIndex) =>
       row.map((cell, cellIndex) => {
         return (
-          <Cell key={cellIndex}/>
+          <Cell
+            key={cellIndex + rowIndex}
+            state={cell.state}
+            value={cell.value}
+            row={rowIndex}
+            column={cellIndex}
+          />
         )
       })
     )
@@ -19,7 +26,7 @@ const Field: React.FC = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <NumberDisplay value={30}/>
+        <NumberDisplay value={40}/>
         <SmileDisplay/>
         <NumberDisplay value={0}/>
       </div>

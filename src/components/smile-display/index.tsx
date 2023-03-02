@@ -9,7 +9,7 @@ const SmileDisplay: React.FC = () => {
   }
   return (
     <div className={styles.wrapper}>
-      <img className={styles.smile} src={smiles.broke} alt="smile"/>
+      <img className={styles.smile} src={smiles.smile} alt="smile"/>
     </div>
   );
 };
