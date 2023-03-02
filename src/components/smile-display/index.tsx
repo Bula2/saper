@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "./smile-display.module.scss"
-const SmileDisplay = () => {
+const SmileDisplay: React.FC = () => {
   const smiles = {
     broke: "/images/broke.png",
     cool: "/images/cool.png",
