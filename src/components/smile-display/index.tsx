@@ -1,15 +1,15 @@
 import React from 'react';
 import styles from "./smile-display.module.scss"
-const SmileDisplay: React.FC = () => {
-  const smiles = {
-    broke: "/images/broke.png",
-    cool: "/images/cool.png",
-    dead: "/images/dead.png",
-    smile: "/images/smile.png",
-  }
+import {Face} from "../../types";
+
+export interface ISmileDisplay {
+  type: Face;
+  onClick: () => void;
+}
+const SmileDisplay: React.FC<ISmileDisplay> = ({type, onClick}) => {
   return (
-    <div className={styles.wrapper}>
-      <img className={styles.smile} src={smiles.smile} alt="smile"/>
+    <div className={styles.wrapper} onClick={() => onClick()}>
+      <img className={styles.smile} src={type} alt="smile"/>
     </div>
   );
 };

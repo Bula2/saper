@@ -11,7 +11,7 @@ export const getCells = (): Cell[][] => {
     for (let j = 0; j < columnsCount; j++) {
       cells[i].push({
         value: CellValue.NONE,
-        state: CellState.OPEN
+        state: CellState.CLOSE
       })
     }
   }

@@ -19,3 +19,10 @@ export enum CellState {
 }
 
 export type Cell = {value: CellValue, state: CellState}
+
+export enum Face {
+  BROKE= "/images/broke.png",
+  COOL = "/images/cool.png",
+  SHOCKED = "/images/shocked.png",
+  SMILE = "/images/smile.png",
+}
