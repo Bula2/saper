@@ -9,7 +9,7 @@ export interface ICell {
   column: number;
   state: CellState;
   value: CellValue;
-  onClick: (rowData: number, colData: number) => void;
+  onClick: (row: number, col: number) => void;
   addShockedFace: () => void;
   addSmileFace: () => void;
   addHelpers: (row: number, col: number) => (e: React.MouseEvent) => void;

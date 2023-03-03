@@ -88,3 +88,7 @@ export const getCells = (): Cell[][] => {
   }
   return cells;
 }
+
+const openEmptyCell = (cells: Cell[][], row: number, col: number) => {
+
+}
