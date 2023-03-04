@@ -2,9 +2,10 @@ import React, {ReactNode, useEffect, useState} from 'react';
 import styles from "./field.module.scss"
 import NumberDisplay from "../number-display";
 import SmileDisplay from "../smile-display";
-import {getCells} from "../../utils";
+import {getCells} from "../../utils/get-cells";
 import Cell from "../cell";
 import {Cell as CellType, CellState, CellValue, Face} from "../../types"
+import {openEmptyCells} from "../../utils/open-empty-cells";
 
 const Field: React.FC = () => {
   const [cells, setCells] = useState<CellType[][]>(getCells());
@@ -19,7 +20,7 @@ const Field: React.FC = () => {
     }
 
     const currentCell = cells[row][col];
-    const currentCellsCopy = cells.slice();
+    let currentCellsCopy = cells.slice();
 
     if (
       currentCell.state === CellState.FLAG ||
@@ -30,8 +31,9 @@ const Field: React.FC = () => {
     }
     if (currentCell.value == CellValue.BOMB) {
 
-    } else if (currentCell.value === CellValue.NONE) {
 
+    } else if (currentCell.value === CellValue.NONE) {
+      setCells(openEmptyCells(currentCellsCopy, row, col));
     } else {
       currentCellsCopy[row][col].state = CellState.OPEN
     }

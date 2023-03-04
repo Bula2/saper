@@ -1,8 +1,8 @@
 import {Cell, CellState, CellValue} from "../types";
+import {columnsCount, rowsCount} from "../variables";
+import {findCellsAround} from "./find-cells-around";
 
 export const getCells = (): Cell[][] => {
-  const columnsCount = 16;
-  const rowsCount = 16;
   let cells: Cell[][] = [];
 
   //заполнение закрытых клеток
@@ -47,37 +47,39 @@ export const getCells = (): Cell[][] => {
       }
 
       let bombsCount = 0;
-      const topLeftBomb = i > 0 && j > 0 ? cells[i - 1][j - 1] : null;
-      const topBomb = i > 0 ? cells[i - 1][j] : null;
-      const topRightBomb = i > 0 && j < columnsCount - 1 ? cells[i - 1][j + 1] : null;
-      const leftBomb = j > 0 ? cells[i][j - 1] : null;
-      const rightBomb = j < columnsCount - 1 ? cells[i][j + 1] : null;
-      const bottomLeftBomb = i < rowsCount - 1 && j > 0 ? cells[i + 1][j - 1] : null;
-      const bottomBomb = i < rowsCount - 1 ? cells[i + 1][j] : null;
-      const bottomRightBomb = i < rowsCount - 1 && j < columnsCount - 1 ? cells[i + 1][j + 1] : null;
+      const {
+        topLeftCell,
+        topCell,
+        topRightCell,
+        leftCell,
+        rightCell,
+        bottomLeftCell,
+        bottomCell,
+        bottomRightCell
+      } = findCellsAround(cells, i, j)
 
-      if (topLeftBomb?.value === CellValue.BOMB) {
+      if (topLeftCell?.value === CellValue.BOMB) {
         bombsCount++;
       }
-      if (topBomb?.value === CellValue.BOMB) {
+      if (topCell?.value === CellValue.BOMB) {
         bombsCount++;
       }
-      if (topRightBomb?.value === CellValue.BOMB) {
+      if (topRightCell?.value === CellValue.BOMB) {
         bombsCount++;
       }
-      if (leftBomb?.value === CellValue.BOMB) {
+      if (leftCell?.value === CellValue.BOMB) {
         bombsCount++;
       }
-      if (rightBomb?.value === CellValue.BOMB) {
+      if (rightCell?.value === CellValue.BOMB) {
         bombsCount++;
       }
-      if (bottomLeftBomb?.value === CellValue.BOMB) {
+      if (bottomLeftCell?.value === CellValue.BOMB) {
         bombsCount++;
       }
-      if (bottomBomb?.value === CellValue.BOMB) {
+      if (bottomCell?.value === CellValue.BOMB) {
         bombsCount++;
       }
-      if (bottomRightBomb?.value === CellValue.BOMB) {
+      if (bottomRightCell?.value === CellValue.BOMB) {
         bombsCount++;
       }
 
