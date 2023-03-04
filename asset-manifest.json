@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/saper/static/css/main.f79d566f.css",
+    "main.js": "/saper/static/js/main.221c003c.js",
+    "static/js/787.aab274f9.chunk.js": "/saper/static/js/787.aab274f9.chunk.js",
+    "index.html": "/saper/index.html",
+    "main.f79d566f.css.map": "/saper/static/css/main.f79d566f.css.map",
+    "main.221c003c.js.map": "/saper/static/js/main.221c003c.js.map",
+    "787.aab274f9.chunk.js.map": "/saper/static/js/787.aab274f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f79d566f.css",
+    "static/js/main.221c003c.js"
+  ]
+}
