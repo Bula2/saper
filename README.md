@@ -1,5 +1,5 @@
 Игра сапер на React.JS+TS.\
-Ссылочка посмотреть: [https://bula2.github.io/saper](https://bula2.github.io/saper)
+Ссылочка посмотреть: [https://saper-buladev.netlify.app/](https://saper-buladev.netlify.app/)
 
 # Getting Started with Create React Index
 
