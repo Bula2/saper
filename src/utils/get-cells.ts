@@ -33,8 +33,8 @@ export const getCells = (): Cell[][] => {
         }
         return cellEl
       }))
+      bombsInCells++;
     }
-    bombsInCells++;
   }
 
   //количество бомб рядом в открытой клетке
