@@ -1,17 +1,17 @@
 @import "../../styles/index.scss";
 
-.wrapper{
+.wrapper {
   background: #cecbcb;
   padding: 16px;
   border-width: 4px;
   border-style: solid;
   @include no-active;
- @media (max-width: 500px) {
-   transform: scale(.6);
- }
+  @media (max-width: 500px) {
+    transform: scale(.8);
+  }
 }
 
-.header{
+.header {
   background: #c5c2c2;
   padding: 10px;
   border-width: 4px;
@@ -23,7 +23,7 @@
   align-items: center;
 }
 
-.body{
+.body {
   margin-top: 16px;
   background: #c5c2c2;
   border-width: 4px;
@@ -34,6 +34,6 @@
   grid-template-columns: repeat(16, 1fr);
 }
 
-.stop_game{
+.stop_game {
   pointer-events: none;
 }
