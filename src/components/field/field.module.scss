@@ -6,6 +6,9 @@
   border-width: 4px;
   border-style: solid;
   @include no-active;
+ @media (max-width: 500px) {
+   transform: scale(.6);
+ }
 }
 
 .header{
