@@ -1,5 +1,5 @@
 import {Cell, CellState, CellValue} from "../types";
-import {columnsCount, rowsCount} from "../variables";
+import {bombsCount, columnsCount, rowsCount} from "../variables";
 import {findCellsAround} from "./find-cells-around";
 
 export const getCells = (): Cell[][] => {
@@ -17,7 +17,6 @@ export const getCells = (): Cell[][] => {
   }
 
   //Заполнение бомб
-  const bombsCount = 40;
   let bombsInCells = 0;
 
   while (bombsInCells < bombsCount) {

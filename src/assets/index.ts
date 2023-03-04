@@ -1,4 +1,4 @@
-export const bombsCount = {
+export const bombsCountNumber = {
   1: "/images/one.png",
   2: "/images/two.png",
   3: "/images/three.png",

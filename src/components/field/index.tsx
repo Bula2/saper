@@ -7,24 +7,36 @@ import {getCells} from "../../utils/get-cells";
 import Cell from "../cell";
 import {Cell as CellType, CellState, CellValue, Face} from "../../types"
 import {openEmptyCells} from "../../utils/open-empty-cells";
-import {columnsCount, rowsCount} from "../../variables";
+import {bombsCount, columnsCount, rowsCount} from "../../variables";
 
 const Field: React.FC = () => {
   const [cells, setCells] = useState<CellType[][]>(getCells());
   const [time, setTime] = useState<number>(0);
   const [face, setFace] = useState<Face>(Face.SMILE);
   const [game, setGame] = useState<boolean>(false);
-  const [bombCount, setBombCount] = useState<number>(40);
+  const [bombCount, setBombCount] = useState<number>(bombsCount);
   const [loss, setLoss] = useState<boolean>(false);
   const [win, setWin] = useState<boolean>(false);
 
   const cellClick = (row: number, col: number) => {
+    let currentCellsCopy = cells.slice();
+
     if (!game) {
+      if (currentCellsCopy[row][col].value === CellValue.BOMB) {
+        let isBomb = true;
+        while (isBomb) {
+          currentCellsCopy = getCells();
+          if (currentCellsCopy[row][col].value !== CellValue.BOMB) {
+            isBomb = false;
+            break;
+          }
+        }
+        setCells(currentCellsCopy);
+      }
       setGame(true);
     }
 
-    const currentCell = cells[row][col];
-    let currentCellsCopy = cells.slice();
+    const currentCell = currentCellsCopy[row][col];
 
     if (
       currentCell.state === CellState.FLAG ||
@@ -44,20 +56,21 @@ const Field: React.FC = () => {
       currentCellsCopy[row][col].state = CellState.OPEN
     }
 
-    let openCellsExists = false;
+    let closeCellsExists = false;
     for (let i = 0; i < rowsCount; i++) {
       for (let j = 0; j < columnsCount; j++) {
         const currentCell = currentCellsCopy[i][j];
         if (currentCell.value !== CellValue.BOMB && currentCell.state === CellState.CLOSE) {
-          openCellsExists = true;
+          closeCellsExists = true;
           break;
         }
       }
     }
 
-    if (!openCellsExists) {
-      currentCellsCopy = currentCellsCopy.map(row => row.map(cell =>{
-        if (cell.value === CellValue.BOMB){
+    if (!closeCellsExists) {
+      currentCellsCopy = currentCellsCopy.map(row => row.map(cell => {
+        if (cell.value === CellValue.BOMB) {
+          setBombCount(0)
           cell.state = CellState.FLAG;
         }
         return cell;
@@ -69,16 +82,13 @@ const Field: React.FC = () => {
   }
 
   const faceClick = () => {
-    const answer = window.confirm("Начать игру заново?");
-    if (answer) {
-      setGame(false);
-      setTime(0);
-      setBombCount(40);
-      setCells(getCells());
-      setLoss(false);
-      setFace(Face.SMILE)
-      setWin(false);
-    }
+    setGame(false);
+    setTime(0);
+    setBombCount(bombsCount);
+    setCells(getCells());
+    setLoss(false);
+    setFace(Face.SMILE)
+    setWin(false);
   }
 
   const addShockedFace = () => {
@@ -136,6 +146,7 @@ const Field: React.FC = () => {
 
   useEffect(() => {
     if (loss) {
+      setBombCount(0);
       setFace(Face.BROKE);
       setGame(false);
     }
@@ -145,7 +156,6 @@ const Field: React.FC = () => {
     if (win) {
       setGame(false);
       setFace(Face.COOL);
-      alert("Вы выиграли, гонгретьюлейт!")
     }
   }, [win])
 

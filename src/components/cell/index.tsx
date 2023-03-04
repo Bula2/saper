@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import styles from "./cell.module.scss"
 import {CellState, CellValue} from "../../types";
 import cx from "classnames";
-import {bombsCount} from "../../assets";
+import {bombsCountNumber} from "../../assets";
 
 export interface ICell {
   row: number;
@@ -25,7 +25,7 @@ const Cell: React.FC<ICell> = (props) => {
       } else if (props.value === CellValue.NONE) {
         return null;
       }
-      return <img className={styles.img} src={bombsCount[Number(props.value) as keyof typeof bombsCount]}
+      return <img className={styles.img} src={bombsCountNumber[Number(props.value) as keyof typeof bombsCountNumber]}
                   alt={"number"}/>;
     } else if (props.state === CellState.FLAG) {
       return <img className={styles.img} src={"/images/flag.png"} alt={"flag"}/>
