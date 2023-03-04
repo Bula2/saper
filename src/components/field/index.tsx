@@ -1,18 +1,22 @@
 import React, {ReactNode, useEffect, useState} from 'react';
 import styles from "./field.module.scss"
+import cx from "classnames"
 import NumberDisplay from "../number-display";
 import SmileDisplay from "../smile-display";
 import {getCells} from "../../utils/get-cells";
 import Cell from "../cell";
 import {Cell as CellType, CellState, CellValue, Face} from "../../types"
 import {openEmptyCells} from "../../utils/open-empty-cells";
+import {columnsCount, rowsCount} from "../../variables";
 
 const Field: React.FC = () => {
   const [cells, setCells] = useState<CellType[][]>(getCells());
   const [time, setTime] = useState<number>(0);
   const [face, setFace] = useState<Face>(Face.SMILE);
   const [game, setGame] = useState<boolean>(false);
-  const [bombCount, setBombCount] = useState<number>(40)
+  const [bombCount, setBombCount] = useState<number>(40);
+  const [loss, setLoss] = useState<boolean>(false);
+  const [win, setWin] = useState<boolean>(false);
 
   const cellClick = (row: number, col: number) => {
     if (!game) {
@@ -29,25 +33,51 @@ const Field: React.FC = () => {
     ) {
       return;
     }
+
     if (currentCell.value == CellValue.BOMB) {
-
-
+      setLoss(true);
+      showBombs(currentCell);
+      return;
     } else if (currentCell.value === CellValue.NONE) {
-      setCells(openEmptyCells(currentCellsCopy, row, col));
+      currentCellsCopy = openEmptyCells(currentCellsCopy, row, col)
     } else {
       currentCellsCopy[row][col].state = CellState.OPEN
     }
+
+    let openCellsExists = false;
+    for (let i = 0; i < rowsCount; i++) {
+      for (let j = 0; j < columnsCount; j++) {
+        const currentCell = currentCellsCopy[i][j];
+        if (currentCell.value !== CellValue.BOMB && currentCell.state === CellState.CLOSE) {
+          openCellsExists = true;
+          break;
+        }
+      }
+    }
+
+    if (!openCellsExists) {
+      currentCellsCopy = currentCellsCopy.map(row => row.map(cell =>{
+        if (cell.value === CellValue.BOMB){
+          cell.state = CellState.FLAG;
+        }
+        return cell;
+      }))
+      setWin(true);
+    }
+
+    setCells(currentCellsCopy);
   }
 
   const faceClick = () => {
-    if (game) {
-      const answer = window.confirm("Начать игру заново?");
-      if (answer) {
-        setGame(false);
-        setTime(0);
-        setBombCount(40);
-        setCells(getCells());
-      }
+    const answer = window.confirm("Начать игру заново?");
+    if (answer) {
+      setGame(false);
+      setTime(0);
+      setBombCount(40);
+      setCells(getCells());
+      setLoss(false);
+      setFace(Face.SMILE)
+      setWin(false);
     }
   }
 
@@ -80,17 +110,44 @@ const Field: React.FC = () => {
     }
   }
 
+  const showBombs = (currentCell: CellType) => {
+    const currenCellsCopy = cells.slice();
+    setCells(currenCellsCopy.map(row => row.map(cell => {
+      if (cell === currentCell) {
+        cell.value = CellValue.RED_BOMB
+      }
+      if (cell.value === CellValue.BOMB || cell.value === CellValue.RED_BOMB) {
+        cell.state = CellState.OPEN
+      }
+      return cell
+    })))
+  }
+
   useEffect(() => {
     if (game && time < 999) {
       const timer = setInterval(() => {
         setTime(time + 1);
       }, 1000)
-
       return () => {
         clearInterval(timer);
       }
     }
   }, [game, time])
+
+  useEffect(() => {
+    if (loss) {
+      setFace(Face.BROKE);
+      setGame(false);
+    }
+  }, [loss])
+
+  useEffect(() => {
+    if (win) {
+      setGame(false);
+      setFace(Face.COOL);
+      alert("Вы выиграли, гонгретьюлейт!")
+    }
+  }, [win])
 
   const generateCells = (): ReactNode => {
     return cells.map((row, rowIndex) =>
@@ -118,7 +175,7 @@ const Field: React.FC = () => {
         <SmileDisplay type={face} onClick={faceClick}/>
         <NumberDisplay value={time}/>
       </div>
-      <div className={styles.body}>
+      <div className={cx(styles.body, (loss || win) && styles.stop_game)}>
         {generateCells()}
       </div>
     </div>

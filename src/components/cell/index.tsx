@@ -20,6 +20,8 @@ const Cell: React.FC<ICell> = (props) => {
     if (props.state === CellState.OPEN) {
       if (props.value === CellValue.BOMB) {
         return <img className={styles.img} src={"/images/bomb.png"} alt={"bomb"}/>
+      } else if (props.value === CellValue.RED_BOMB) {
+        return <img className={styles.img} src={"/images/red-bomb.png"} alt={"bomb"}/>
       } else if (props.value === CellValue.NONE) {
         return null;
       }

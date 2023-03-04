@@ -8,7 +8,8 @@ export enum CellValue {
   SIX,
   SEVEN,
   EIGHT,
-  BOMB
+  BOMB,
+  RED_BOMB
 }
 
 export enum CellState {
